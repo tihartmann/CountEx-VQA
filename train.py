@@ -281,11 +281,11 @@ def main():
     BCE = nn.BCEWithLogitsLoss()
     #vqa_model = None
    
-    train_dataset = VQADataset2(root_dir="../", mode="train")
+    train_dataset = VQADataset2(root_dir="./", mode="train")
     train_loader = DataLoader(train_dataset, batch_size=config.BATCH_SIZE, shuffle=True, num_workers=config.NUM_WORKERS, pin_memory=True)
     
      #with torch.no_grad():
-    vqa_model = MutanAttInference2(dir_logs='../VQA/vqa_pytorch/logs/vqa/mutan_att_trainval', config='../VQA/vqa_pytorch/options/vqa/mutan_att_trainval.yaml')
+    vqa_model = MutanAttInference2(dir_logs='./VQA/vqa_pytorch/logs/vqa/mutan_att_trainval', config='./VQA/vqa_pytorch/options/vqa/mutan_att_trainval.yaml')
     classes = get_vqa_classes(train_dataset, vqa_model)
     vqa_model.classes = classes
     vqa_model.model.to(config.DEVICE)
@@ -294,7 +294,7 @@ def main():
     g_scaler = torch.cuda.amp.GradScaler() #faster and uses less VRAM, same results
     d_scaler = torch.cuda.amp.GradScaler()
     
-    val_dataset = VQADataset2(root_dir="../", mode="val")
+    val_dataset = VQADataset2(root_dir="./", mode="val")
     val_loader = DataLoader(val_dataset, batch_size=1, shuffle=False, pin_memory=True)
     
     all_losses = {"G_losses": [], "D_losses": [], "D_fake": [], "D_real": []}
