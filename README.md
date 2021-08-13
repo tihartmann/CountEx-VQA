@@ -56,5 +56,5 @@ flask run
 ```
 
 ## Acknowledgement
-This project uses a pre-trained MUTAN VQA-Model as described by [Ben-younes et al.](https://arxiv.org/abs/1705.06676).
+This project uses a pre-trained MUTAN VQA-Model as described by [Ben-younes et al.](https://arxiv.org/abs/1705.06676) in their paper *MUTAN: Multimodal Tucker Fusion for Visual Question Answering*.
 The code and pre-trained models can be found in [this repository](https://github.com/Cadene/vqa.pytorch)
