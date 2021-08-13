@@ -4,3 +4,6 @@
 [submodule "VQA/vqa.pytorch"]
 	path = VQA/vqa.pytorch
 	url = https://github.com/Cadene/vqa.pytorch.git
+[submodule "VQA/vqa_pytorch"]
+	path = VQA/vqa_pytorch
+	url = https://github.com/Cadene/vqa.pytorch.git
