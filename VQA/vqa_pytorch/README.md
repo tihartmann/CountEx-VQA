@@ -1,6 +1,6 @@
 # Visual Question Answering in pytorch
 
-**/!\ New version of pytorch for VQA available here:** https://github.com/Cadene/block.bootstrap.pytorch
+The code in this folder stems from https://github.com/Cadene/vqa.pytorch#pretrained-models.
 
 This repo was made by [Remi Cadene](http://remicadene.com) (LIP6) and [Hedi Ben-Younes](https://twitter.com/labegne) (LIP6-Heuritech), two PhD Students working on VQA at [UPMC-LIP6](http://lip6.fr) and their professors [Matthieu Cord](http://webia.lip6.fr/~cord) (LIP6) and [Nicolas Thome](http://webia.lip6.fr/~thomen) (LIP6-CNAM). We developed this code in the frame of a research paper called [MUTAN: Multimodal Tucker Fusion for VQA](https://arxiv.org/abs/1705.06676) which is (as far as we know) the current state-of-the-art on the [VQA 1.0 dataset](http://visualqa.org).
 
