@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>CountEx-VQA Demo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light text-center bg-primary">
+  <h2>CountEx-VQA:<br>Counterfactual Explanations for Visual Question Answering</h2>
+</nav>
+  
+<div class="container">
+  <div class="row">
+    <p>
+      <i>CountEx-VQA</i> is a tool to generate counterfactual images to make a Visual Question Answering (VQA) model's predictions more interpretable. Given an image-question pair and a VQA model, 
+      <i>CountEx-VQA</i> is trained to apply the minimal number of modifications to the image in order to change the VQA model's predicted answer to the question. This demo is part of my Master's Thesis 
+      <i>Generating Counterfactual Images for VQA by Editing Question Critical Objects</i> at WeST, University Koblenz-Landau.
+
+    </p>
+  </div>
+  <div class="row">
+    <h3>How it works</h3>
+    <ol>
+      <li>Upload an image by clicking on the "Upload Image" button.</li>
+      <li>Enter a question about the image into the "Enter a question" field and hit the "Submit" button.</li>
+      <li><i>CountEx-VQA</i> uses a <a href="https://github.com/Cadene/vqa.pytorch">pretrained MUTAN VQA model</a> to predict an answer to your question. In addition to the prediction, it outputs
+      a heatmap that indicates on which regions of the image MUTAN focused the most to make its decision.</li>
+      <li><i>CountEx-VQA</i> returns a counterfactual image along with MUTAN's new prediction and the corresponding heatmap.</li>
+    </ol>
+  </div>
+</div>
+
+<div class="container">
+  <form action="{{ url_for('predict') }}" method="post">
+    <div class="form-group">
+      <label for="inputImage">Upload an Image</label>
+      <input type="file" class="form-control" id="inputImage">
+    </div>
+    <div class="form-group">
+      <label for="inputQuestion">Enter Question</label>
+      <input type="text" class="form-control" id="inputQuestion" placeholder="Type a question...">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-2 col-lg-6">
+      {{ prediction }}
+    </div>
+    <div class="col-sm-2 col-lg-6">
+
+    </div>
+    <div class="col-sm-2 col-lg-6">
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
