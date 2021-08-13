@@ -31,8 +31,10 @@ def home():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    img = request.form.values()[0]
-    question = request.form.values()[1]
+    features = [x for x in request.form.values()]
+    img = features[0]
+    question = features[1]
+    infer(img,question)
 
 
 normalize_img = transforms.Normalize((0.5,0.5,0.5),(0.5,0.5,0.5))
