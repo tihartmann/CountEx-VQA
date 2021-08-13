@@ -1,6 +1,8 @@
+import sys
+sys.path.append("./")
 import torch
 import torch.nn
-from .config import *
+import config
 from torchvision.utils import save_image
 
 def save_some_examples(gen, val_loader, epoch, folder):
