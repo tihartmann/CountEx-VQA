@@ -309,7 +309,7 @@ def main():
                 load_checkpoint(config.CHECKPOINT_GEN, gen, opt_gen, config.LEARNING_RATE)
                 load_checkpoint(config.CHECKPOINT_DISC, disc, opt_disc, config.LEARNING_RATE)
             
-            loss_file = f"evaluation/losses_{str(datetime.now())}_l1lambda_{L2_LAMBDA}_CE_{CE_LAMBDA}_GLR_{config.G_LEARNING_RATE}_DLR_{config.D_LEARNING_RATE}_clip_{config.WEIGHT_CLIP}.json"
+            loss_file = f"evaluation/losses_{str(datetime.now())}_l2lambda_{L2_LAMBDA}_CE_{CE_LAMBDA}_GLR_{config.G_LEARNING_RATE}_DLR_{config.D_LEARNING_RATE}.json"
      
             for epoch in range(config.NUM_EPOCHS):
                 G_losses, D_losses, D_fake_losses, D_real_losses = train_fn(disc, gen, vqa_model, train_loader, train_dataset, opt_disc, opt_gen, L2_LOSS, CROSS_ENTROPY, BCE, g_scaler, d_scaler, epoch, L2_LAMBDA, CE_LAMBDA, tb)
