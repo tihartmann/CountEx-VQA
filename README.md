@@ -35,7 +35,7 @@ cd tools/
 
 ## Reproduce Results
 To reproduce the results from the experiments described in the thesis, run the following code. Note that, by default, the training script uses CUDA if available. 
-If you want to manually specify the device, you can do so by changing line 3 in ```config.py```. 
+If you want to manually specify the device, you can do so by changing line 3 in the ```config.py``` file. 
 
 ```
 cd $HOME/CountEx-VQA
