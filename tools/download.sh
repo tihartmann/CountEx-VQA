@@ -19,3 +19,8 @@ wget -P ./data/coco http://images.cocodataset.org/zips/train2014.zip
 wget -P ./data/coco http://images.cocodataset.org/zips/val2014.zip
 unzip ./data/coco/train2014.zip
 unzip ./data/coco/val2014.zip
+
+# pretrained MUTAN model
+mkdir -p ./VQA/vqa_pytorch/logs/
+mkdir -p ./VQA/vqa_pytorch/logs/vqa
+wget http://webia.lip6.fr/~cadene/Downloads/vqa.pytorch/logs/vqa/mlb_att_trainval.zip 

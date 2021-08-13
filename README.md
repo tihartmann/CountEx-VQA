@@ -20,14 +20,21 @@ Next, clone the repository and install the requirements:
 
 ```
 cd $HOME
-git clone 
+git clone https://github.com/tihartmann/CountEx-VQA.git
+cd CountEx-VQA
+pip install -r requirements.txt
+```
+### Data
+The data used in the thesis' experiments and the pre-trained MUTAN VQA model can be downloaded as follows:
+```
+cd tools/
+./download.sh
+
 ```
 
-### Data
 
-## Reproducing results
+## Pretrained Models
 
-### Pretrained Model
 The pretrained generator and discriminator can be downloaded [here](https://drive.google.com/drive/folders/1i5D6dDg-6wAiToT4QnlxIC5oElVc5XyF?usp=sharing).
 
 ## Web Demo
