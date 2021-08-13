@@ -1,6 +1,8 @@
 # CountEx-VQA - Counterfactual Explanations for Visual Question Answering
 This repository contains the code for my Master's thesis "Generating Counterfactual Images for VQA by Editing Question Critical Objects" at WeST, University of Koblenz-Landau.
-The thesis was supervised by Prof. Dr. Matthias Thimm and Dr. Zeyd Boukhers. This repo was made by [Timo Hartmann](https://www.researchgate.net/profile/Timo-Hartmann-3). We developed this code to generate counterfactual images for a VQA model to increase its interpretability.
+The thesis was supervised by Prof. Dr. Matthias Thimm and Dr. Zeyd Boukhers. This repo was made by [Timo Hartmann](https://www.researchgate.net/profile/Timo-Hartmann-3). 
+
+We developed this code to generate counterfactual images for a VQA model to increase its interpretability. Specifically, the proposed method, *CountEx-VQA*, uses a Generative Adversarial Network to translate an image into a minimally different counterfactual such that the prediction of a VQA model based on a given question changes. 
 
 ## Installation
 
@@ -12,4 +14,11 @@ The thesis was supervised by Prof. Dr. Matthias Thimm and Dr. Zeyd Boukhers. Thi
 
 ## Reproducing results
 
+### Pretrained Model
+The pretrained generator and discriminator can be downloaded [here](https://drive.google.com/drive/folders/1i5D6dDg-6wAiToT4QnlxIC5oElVc5XyF?usp=sharing).
+
 ## Web Demo
+
+## Acknowledgement
+This project uses a pre-trained MUTAN VQA-Model as described by [Ben-younes et al.](https://arxiv.org/abs/1705.06676).
+The code and pre-trained models can be found in [this repository](https://github.com/Cadene/vqa.pytorch)
