@@ -9,8 +9,19 @@ We developed this code to generate counterfactual images for a VQA model to incr
 ## Installation
 
 ### Requirements
+The code in this repository requires Python 3. We advise you to run the code inside an Anaconda environment:
 
-### Submodules
+```
+conda create --name countex-vqa python=3.8
+source activate countex-vqa
+```
+
+Next, clone the repository and install the requirements:
+
+```
+cd $HOME
+git clone 
+```
 
 ### Data
 
