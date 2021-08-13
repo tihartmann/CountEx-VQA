@@ -1,5 +1,5 @@
 import torch
-from utils import save_checkpoint, load_checkpoint, save_some_examples
+from utils import save_checkpoint, load_checkpoint
 from PIL import Image
 import torch.nn as nn
 import torch.optim as optim
@@ -10,17 +10,21 @@ from model.generator import Generator
 from model.discriminator import Pix2PixDiscriminator
 from torch.utils.data import DataLoader
 from torchvision import transforms
-from torchvision.utils import save_image, make_grid
+from torchvision.utils import save_image
 import numpy as np
 from tqdm import tqdm
 import sys
 from datetime import datetime
-import matplotlib.pyplot as plt
 from torch.utils.tensorboard import SummaryWriter
 import os
 import random
 
-from VQA.vqa_pytorch.vqa_inference import MutanAttInference2
+sys.path.append("./VQA/vqa_pytorch/vqa/")
+sys.path.append("./VQA/vqa_pytorch/")
+sys.path.append('./VQA/vqa_pytorch/vqa/external/skip-thoughts.torch/pytorch/')
+sys.path.append('./VQA/vqa_pytorch/vqa/external/pretrained-models.pytorch/')
+
+from vqa_inference import MutanAttInference2
 
 torch.backends.cudnn.benchmark = True
 #set seed for reproduceability
@@ -262,7 +266,7 @@ def main():
     """Main function to start training procedure of CountEx-VQA."""
     
     # set up folders to save example results during training
-    if not os.isdir("./evaluation"):
+    if not os.path.isdir("./evaluation"):
         os.mkdir("./evaluation")
         os.mkdir("./evaluation/training")
 

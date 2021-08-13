@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from spectral_norm import SpectralNorm
+from .spectral_norm import SpectralNorm
 
 class Block(nn.Module):
     """
@@ -71,7 +71,7 @@ class Generator(nn.Module):
             The default value is 414.
     """
     def __init__(self, in_channels=3, features=64, q_emb_dim=2400, ans_logits_dim=414):
-        super(Generator4, self).__init__()
+        super(Generator, self).__init__()
         self.initial_down = nn.Sequential(
             nn.Conv2d(in_channels+1, features, 4, 2, 1, padding_mode="reflect"),
             nn.LeakyReLU(0.2)
@@ -166,3 +166,4 @@ if __name__ == "__main__":
     att = torch.randn((1,1,256,256))
 
     preds = g(torch.cat([img,att],1), q_emb, ans_emb)
+    print(preds.shape)

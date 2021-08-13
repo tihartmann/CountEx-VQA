@@ -1,8 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import functools
-from spectral_norm import SpectralNorm
+from .spectral_norm import SpectralNorm
 
 class CNNBlock(nn.Module):
     """
