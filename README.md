@@ -48,7 +48,7 @@ If you want to start the training procedure using the pre-trained CountEx-VQA mo
 The pretrained generator and discriminator can be downloaded [here](https://drive.google.com/drive/folders/1i5D6dDg-6wAiToT4QnlxIC5oElVc5XyF?usp=sharing).
 
 ## Web Demo
-
+A Flask-based web demo is available inside ```$HOME/CountEx-VQA/demo```. To run the demo, you must download the pretrained generator using the link provided in [Pretrained Models](#pretrained-models)
 ## Acknowledgement
 This project uses a pre-trained MUTAN VQA-Model as described by [Ben-younes et al.](https://arxiv.org/abs/1705.06676).
 The code and pre-trained models can be found in [this repository](https://github.com/Cadene/vqa.pytorch)
