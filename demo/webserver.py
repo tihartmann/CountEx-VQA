@@ -53,7 +53,7 @@ def predict():
     #img = features[0]
     #question = features[1]
     #infer(img,question)
-    return render_template
+    return render_template('index.html', prediction_text='This is a test!')
 
 if __name__ == "__main__":
     app.run()
