@@ -54,3 +54,6 @@ def norm_tensor(x):
 def infer(img, q, dataset=train_dataset):
     print(img)
     print(q)
+
+if __name__ == "__main__":
+    app.run(debug=True)
