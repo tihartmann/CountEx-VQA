@@ -1,6 +1,6 @@
 import torch
 import torch.nn
-import config
+from .config import *
 from torchvision.utils import save_image
 
 def save_some_examples(gen, val_loader, epoch, folder):
