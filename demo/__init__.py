@@ -1,4 +1,2 @@
-from .. import VQA
-from .. import model
-from .. import utils
-from .. import config
+import sys
+sys.path.append("../")
