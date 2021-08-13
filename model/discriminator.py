@@ -54,7 +54,7 @@ class Pix2PixDiscriminator(nn.Module):
         self.pre_embed = nn.Linear(ans_logits_dim, img_size*img_size)
         self.embed = SpectralNorm(self.pre_embed)
         
-        self.initial_pre = nn.Conv2d(
+        self.initial = nn.Conv2d(
                 in_channels+1,
                 features[0],
                 kernel_size=4,
@@ -62,11 +62,6 @@ class Pix2PixDiscriminator(nn.Module):
                 padding=1,
                 padding_mode="reflect",
             )
-        
-        self.initial = nn.Sequential(
-            SpectralNorm(self.initial_pre),
-            nn.LeakyReLU(0.2),
-        )
 
         layers = []
         in_channels = features[0]

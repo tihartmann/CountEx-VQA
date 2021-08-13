@@ -260,6 +260,11 @@ def train_fn(disc, gen, vqa_model, loader, dataset, opt_disc, opt_gen, l2, cross
             
 def main():   
     """Main function to start training procedure of CountEx-VQA."""
+    
+    # set up folders to save example results during training
+    if not os.isdir("./evaluation"):
+        os.mkdir("./evaluation")
+        os.mkdir("./evaluation/training")
 
     disc = Pix2PixDiscriminator().to(config.DEVICE) 
     gen = Generator(features=64).to(config.DEVICE)
