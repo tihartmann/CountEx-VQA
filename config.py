@@ -14,5 +14,5 @@ CE_LAMBDA = [100,30]
 L2_LAMBDA = [1, 0.03]
 LOAD_MODEL = False
 SAVE_MODEL = True
-CHECKPOINT_DISC = "disc.pth.tar"
-CHECKPOINT_GEN = "gen.pth.tar"
+CHECKPOINT_DISC = "discriminator.pth.tar"
+CHECKPOINT_GEN = "generator.pth.tar"

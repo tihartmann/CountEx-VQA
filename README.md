@@ -42,6 +42,8 @@ cd $HOME/CountEx-VQA
 python train.py
 ```
 
+If you want to start the training procedure using the pre-trained CountEx-VQA model, download the weights using the link below and set ```LOAD_MODEL = TRUE``` in line 15 of ```config.py```.
+
 ### Pretrained Models
 The pretrained generator and discriminator can be downloaded [here](https://drive.google.com/drive/folders/1i5D6dDg-6wAiToT4QnlxIC5oElVc5XyF?usp=sharing).
 

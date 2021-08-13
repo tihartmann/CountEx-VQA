@@ -99,10 +99,8 @@ class Generator(nn.Module):
         self.up2 = Block(features*2, features, down=False, act="leaky", use_dropout=True)#changed from relu
         self.up3 = Block(features*2, features, down=False, act="leaky", use_dropout=False)#changed from relu
         self.up4 = Block(features*2, features, down=False, act="leaky", use_dropout=False)#changed from relu
-        self.final_up_pre = nn.ConvTranspose2d(features * 2, in_channels, kernel_size=4, stride=2, padding=1)
         self.final_up = nn.Sequential(
-            #nn.ConvTranspose2d(features * 2, in_channels, kernel_size=4, stride=2, padding=1),
-            SpectralNorm(self.final_up_pre),
+            nn.ConvTranspose2d(features * 2, in_channels, kernel_size=4, stride=2, padding=1),
             nn.Tanh(),
         )
         
