@@ -33,8 +33,15 @@ cd tools/
 ```
 
 
-## Pretrained Models
+## Reproduce Results
+To reproduce the results from the experiments described in the thesis, run the following:
 
+```
+cd $HOME/CountEx-VQA
+python train.py
+```
+
+### Pretrained Models
 The pretrained generator and discriminator can be downloaded [here](https://drive.google.com/drive/folders/1i5D6dDg-6wAiToT4QnlxIC5oElVc5XyF?usp=sharing).
 
 ## Web Demo
