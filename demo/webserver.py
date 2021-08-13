@@ -9,6 +9,24 @@ import torch.nn as nn
 
 from VQA.vqa_pytorch.vqa_inference import MutanAttInference2
 
+normalize_img = transforms.Normalize((0.5,0.5,0.5),(0.5,0.5,0.5))
+normalize_mask = transforms.Normalize((0.5),(0.5))
+trans_to_pil = transforms.ToPILImage()
+
+def norm_tensor(x):
+    x = x[0]
+    if not all(x == 0):
+        x -= x.min()
+        x /= x.max()
+        x = 2*x - 1
+        return(x[None,:])
+    else:
+        return x
+
+def infer(img, q, dataset):
+    print(img)
+    print(q)
+
 app = Flask(__name__)
 
 # laod generator
@@ -35,25 +53,7 @@ def predict():
     #img = features[0]
     #question = features[1]
     #infer(img,question)
-
-
-normalize_img = transforms.Normalize((0.5,0.5,0.5),(0.5,0.5,0.5))
-normalize_mask = transforms.Normalize((0.5),(0.5))
-trans_to_pil = transforms.ToPILImage()
-
-def norm_tensor(x):
-    x = x[0]
-    if not all(x == 0):
-        x -= x.min()
-        x /= x.max()
-        x = 2*x - 1
-        return(x[None,:])
-    else:
-        return x
-
-def infer(img, q, dataset=train_dataset):
-    print(img)
-    print(q)
+    return render_template
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
