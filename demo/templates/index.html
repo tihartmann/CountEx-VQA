@@ -36,42 +36,41 @@
 </div>
 
 <div class="container">
-  <form action="{{ url_for('predict') }}" method="post">
+  <form action="/predict" method="POST" enctype="multipart/form-data">
     <div class="form-group">
       <label for="inputImage">Upload an Image</label>
-      <input type="file" class="form-control" id="inputImage">
+      <input type="file" class="form-control" id="inputImage" name="inputImage">
     </div>
     <div class="form-group">
       <label for="inputQuestion">Enter Question</label>
-      <input type="text" class="form-control" id="inputQuestion" placeholder="Type a question...">
+      <input type="text" class="form-control" id="inputQuestion" placeholder="Type a question..." name="inputQuestion">
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary" id="submitInput">Submit</button>
   </form>
 </div>
 
 <div class="container">
   <div class="row text-center">
+    <h3>{{ question }}</h3>
+  </div>
+  <div class="row text-center">
     <div class="col-sm-4 col-lg-6">
-      <h3>Original Image</h3>
-      <p>{{ prediction_text }}</p>
+      <h4>Original Image</h4>
     </div>
     <div class="col-sm-4 col-lg-6">
-      <h3>MUTAN's prediction</h3>
+      <h4>Counterfactual Image</h4>
     </div>
   </div>
 
   <div class="row text-center">
     <div class="col-sm-2 col-lg-3">
-      <h3>Original Image</h3>
+      {{  original_image|safe }}
     </div>
     <div class="col-sm-2 col-lg-3">
-      <h3>MUTAN's prediction</h3>
     </div>
     <div class="col-sm-2 col-lg-3">
-      <h3>Original Image</h3>
     </div>
     <div class="col-sm-2 col-lg-3">
-      <h3>MUTAN's prediction</h3>
     </div>
   </div>
 </div>
