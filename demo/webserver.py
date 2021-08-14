@@ -104,7 +104,7 @@ app = Flask(__name__)
 
 
 # laod generator
-gen = Generator()
+gen = Generator().to(device)
 checkpoint = torch.load('../model/generator.pth.tar')
 gen.load_state_dict(checkpoint["state_dict"])
 gen.eval()
@@ -115,6 +115,7 @@ train_dataset = VQADataset2(root_dir="../", mode="train")
 
 classes = get_vqa_classes(train_dataset, vqa_model)
 vqa_model.classes = classes
+vqa_model.model = vqa_model.model.to(device)
 vqa_model.model.eval()
 
 
