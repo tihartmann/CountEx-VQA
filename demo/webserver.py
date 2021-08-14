@@ -39,7 +39,9 @@ def norm_tensor(x):
         return x
 
 def infer(img, question, dataset):
-    img = img[None,:,:,:].to(device)
+    img = img[None,:,:,:]
+    img = img.to(device)
+    print(img.shape)
     #question = dataset.questions[qid.item()]
     # get attention and logits    
     with torch.no_grad():
@@ -59,7 +61,7 @@ def infer(img, question, dataset):
     orig_logits_new = torch.Tensor(orig_logits_new.cpu().detach().numpy()[:,vqa_model.classes]).to(device)
     # normalize logits to be between [-1,1]
     orig_logits_new = norm_tensor(orig_logits_new)
-    orig_logits, q1 = orig_logits.to(device), q1.to(device)
+    orig_logits_new, q1 = orig_logits_new.to(device), q1.to(device)
     answer = torch.tensor([torch.argmax(orig_logits_new).item()],device=device)
     # compute attention map, foreground object and background
     att, fg_real, bg_real = vqa_model.grad_cam(img[0].cpu(), orig_logits, activations)
