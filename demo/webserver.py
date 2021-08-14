@@ -21,7 +21,12 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-
+resize = transforms.Compose([
+            transforms.Resize((256,256)),
+            #transforms.ToTensor(),
+            #transforms.Normalize((0.5,0.5,0.5), (0.5,0.5,0.5)),
+        ]
+        )
 normalize_img = transforms.Normalize((0.5,0.5,0.5),(0.5,0.5,0.5))
 normalize_mask = transforms.Normalize((0.5),(0.5))
 trans_to_pil = transforms.ToPILImage()
@@ -40,6 +45,7 @@ def norm_tensor(x):
 
 def infer(img, question, dataset):
     img = img[None,:,:,:]
+    img = resize(img)
     img = img.to(device)
     print(img.shape)
     #question = dataset.questions[qid.item()]
