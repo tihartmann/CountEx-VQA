@@ -141,8 +141,11 @@ def predict():
     print(counterfactual.shape)
     # convert counterfactual to base64
 
-    counterfactual = counterfactual[0].permute(1,2,0).detach().cpu().numpy()
-    counterfactual = base64.b64encode(counterfactual).decode('ascii')
+    counterfactual = trans_to_pil(counterfactual[0])
+    buff = BytesIO()
+    counterfactual.save(buff, format="JPEG")
+    counterfactual = base64.b64encode(buff.getvalue()).decode('ascii')
+    buff.close()
     print(type(counterfactual))
     return render_template(
         'index.html', 
