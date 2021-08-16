@@ -4,23 +4,22 @@ from utils import save_checkpoint, load_checkpoint, save_some_examples
 from dataset import VQADataset2, get_vqa_classes
 from model.generator import Generator
 from torch.utils.data import DataLoader
-from torchvision import transforms, datasets
+from torchvision import transforms
+import matplotlib.pyplot as plt
 import torch.nn as nn
 import numpy as np
 import json
 from PIL import Image
 from io import BytesIO
 import base64
+from skimage import transform
+
 from VQA.vqa_pytorch.vqa_inference import MutanAttInference2
 from tempfile import NamedTemporaryFile
 from shutil import copyfileobj
 
 UPLOAD_FOLDER = './uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 resize = transforms.Compose([
             transforms.Resize((256,256)),
@@ -33,6 +32,30 @@ normalize_mask = transforms.Normalize((0.5),(0.5))
 trans_to_pil = transforms.ToPILImage()
 trans_to_Tensor = transforms.ToTensor()
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+
+app = Flask(__name__)
+
+
+# laod generator
+gen = Generator().to(device)
+checkpoint = torch.load('../model/generator.pth.tar')
+gen.load_state_dict(checkpoint["state_dict"])
+gen.eval()
+
+# load VQA model
+vqa_model = MutanAttInference2(dir_logs='../VQA/vqa_pytorch/logs/vqa/mutan_att_trainval', config='../VQA/vqa_pytorch/options/vqa/mutan_att_trainval.yaml')
+train_dataset = VQADataset2(root_dir="../", mode="train")
+
+classes = get_vqa_classes(train_dataset, vqa_model)
+vqa_model.classes = classes
+vqa_model.model = vqa_model.model.to(device)
+vqa_model.model.eval()
+
+# functions
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def norm_tensor(x):
     x = x[0]
@@ -96,26 +119,28 @@ def infer(img, question, dataset):
     #pred_logits_new = torch.Tensor(pred_logits.cpu().detach().numpy()[:,vqa_model.classes]).to(device)
     #normalize logits to be between [-1,1]
     #pred_logits_new = norm_tensor(pred_logits_new)
-    return img, generated * 0.5 + 0.5, a1, a2, question
+    return img, att, generated * 0.5 + 0.5, a1, a2, question
 
-app = Flask(__name__)
+def my_add(img, heat_map):
+    height = img.shape[0]
+    width = img.shape[1]
+    
+    # resize heat map
+    heat_map_resized = transform.resize(heat_map, (height, width,1))
+    # normalize
+    max_value = np.max(heat_map_resized)
+    min_value = np.min(heat_map_resized)
+    normalized_heat_map = (heat_map_resized - min_value) / (max_value - min_value)
+    return normalized_heat_map
 
-
-# laod generator
-gen = Generator().to(device)
-checkpoint = torch.load('../model/generator.pth.tar')
-gen.load_state_dict(checkpoint["state_dict"])
-gen.eval()
-
-# load VQA model
-vqa_model = MutanAttInference2(dir_logs='../VQA/vqa_pytorch/logs/vqa/mutan_att_trainval', config='../VQA/vqa_pytorch/options/vqa/mutan_att_trainval.yaml')
-train_dataset = VQADataset2(root_dir="../", mode="train")
-
-classes = get_vqa_classes(train_dataset, vqa_model)
-vqa_model.classes = classes
-vqa_model.model = vqa_model.model.to(device)
-vqa_model.model.eval()
-
+def get_attention(image, normalized_heat_map):
+    buff = BytesIO()
+    plt.imshow(image)
+    plt.imshow(255* normalized_heat_map, alpha=0.6, cmap="viridis")
+    plt.savefig(buff, format="JPEG")
+    buff.seek(0)
+    heat_img_base64 = base64.b64encode(buff.read()).decode('ascii')
+    return heat_img_base64
 
 @app.route('/')
 def home():
@@ -136,9 +161,12 @@ def predict():
     question = request.form.get('inputQuestion')
     
     # make inference
-    _, counterfactual, a1, a2, _ = infer(visual_Tensor, question, dataset=train_dataset)
+    img, att, counterfactual, a1, a2, _ = infer(visual_Tensor, question, dataset=train_dataset)
     orig_ans = json.loads(a1)["ans"][0]
     counter_ans = json.loads(a2)["ans"][0]
+    # get heatmap
+    normalized_heat_map = my_add(img, att)
+    heat_map = get_attention(img, normalized_heat_map)
     # convert counterfactual to base64
 
     counterfactual = trans_to_pil(counterfactual[0])
@@ -151,6 +179,7 @@ def predict():
         question=question, 
         original_image=f'<img src="data:image/jpg;base64,{img}" class="img-fluid" width="256" height="256"/>', 
         orig_ans=orig_ans,
+        heat_map=heat_map,
         counterfactual=f'<img src="data:image/jpg;base64,{counterfactual}" class="img-fluid" width="256" height="256"/>',
         counter_ans=counter_ans,
     )
