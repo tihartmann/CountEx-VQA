@@ -1,5 +1,3 @@
-**Note: This repository is still under development and will be finalized soon!**
-
 # CountEx-VQA - Counterfactual Explanations for Visual Question Answering
 This repository contains the code for my Master's thesis "Generating Counterfactual Images for VQA by Editing Question Critical Objects" at WeST, University of Koblenz-Landau.
 The thesis was supervised by Prof. Dr. Matthias Thimm and Dr. Zeyd Boukhers. This repo was made by [Timo Hartmann](https://www.researchgate.net/profile/Timo-Hartmann-3). 
