@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 from torchvision import transforms, datasets
 import torch.nn as nn
 import numpy as np
-import re
+import json
 from PIL import Image
 from io import BytesIO
 import base64
@@ -48,7 +48,6 @@ def infer(img, question, dataset):
     img = img[None,:,:,:]
     img = resize(img)
     img = img.to(device)
-    print(img.shape)
     #question = dataset.questions[qid.item()]
     # get attention and logits    
     with torch.no_grad():
@@ -138,6 +137,8 @@ def predict():
     
     # make inference
     _, counterfactual, a1, a2, _ = infer(visual_Tensor, question, dataset=train_dataset)
+    orig_ans = json.loads(a1)["ans"][0]
+    counter_ans = json.loads(a2)["ans"][0]
     # convert counterfactual to base64
 
     counterfactual = trans_to_pil(counterfactual[0])
@@ -149,7 +150,9 @@ def predict():
         'index.html', 
         question=question, 
         original_image=f'<img src="data:image/jpg;base64,{img}" class="img-fluid" width="256" height="256"/>', 
-        counterfactual=f'<img src="data:image/jpg;base64,{counterfactual}" class="img-fluid" width="256" height="256"/>'    
+        orig_ans=orig_ans,
+        counterfactual=f'<img src="data:image/jpg;base64,{counterfactual}" class="img-fluid" width="256" height="256"/>',
+        counter_ans=counter_ans,
     )
 
 if __name__ == "__main__":
