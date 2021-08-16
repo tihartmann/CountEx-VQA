@@ -165,6 +165,7 @@ def predict():
     img_tensor, att, counterfactual, a1, a2, _ = infer(resize(visual_Tensor), question, dataset=train_dataset)
     orig_ans = json.loads(a1)["ans"][0]
     counter_ans = json.loads(a2)["ans"][0]
+    print(a2)
     # get heatmap
     img_tensor = img_tensor[0].permute(1,2,0).detach().cpu().numpy()
     heat_map = get_attention(np.array(img_tensor), att[0].permute(1,2,0).detach().cpu())
@@ -180,7 +181,7 @@ def predict():
         question=question, 
         original_image=f'<img src="data:image/jpg;base64,{img}" class="img-fluid" width="256" height="256"/>', 
         orig_ans=orig_ans,
-        heat_map=heat_map,
+        heat_map=f'<img src="data:image/jpg;base64,{heat_map}" class="img-fluid" width="256" height="256"/>',
         counterfactual=f'<img src="data:image/jpg;base64,{counterfactual}" class="img-fluid" width="256" height="256"/>',
         counter_ans=counter_ans,
     )
