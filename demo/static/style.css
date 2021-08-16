@@ -10,7 +10,7 @@ h2 {
 	padding: 1em;
 }
 
-.footer {
+#footercontainer {
 	bottom:0;
 	width:100%;
     padding-bottom: 0 !important;
