@@ -44,7 +44,7 @@ gen.load_state_dict(checkpoint["state_dict"])
 gen.eval()
 
 # load VQA model
-vqa_model = MutanAttInference2(dir_logs='../VQA/vqa_pytorch/logs/vqa/mutan_att_trainval', config='../VQA/vqa_pytorch/options/vqa/mutan_att_trainval.yaml')
+vqa_model = MutanAttInferencedemo(dir_logs='../VQA/vqa_pytorch/logs/vqa/mutan_att_trainval', config='../VQA/vqa_pytorch/options/vqa/mutan_att_trainval.yaml')
 train_dataset = VQADataset2(root_dir="../", mode="train")
 
 classes = get_vqa_classes(train_dataset, vqa_model)
