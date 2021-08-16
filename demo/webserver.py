@@ -166,7 +166,7 @@ def predict():
     counter_ans = json.loads(a2)["ans"][0]
     # get heatmap
     img_tensor = img_tensor[0].detach().cpu().numpy()
-    heat_map = get_attention(trans_to_pil(img_tensor), att.detach().cpu())
+    heat_map = get_attention(np.array(img_tensor), att.detach().cpu())
     # convert counterfactual to base64
 
     counterfactual = trans_to_pil(counterfactual[0])
