@@ -94,8 +94,8 @@ def infer(img, question, dataset):
     answer = torch.tensor([torch.argmax(orig_logits_new).item()],device=device)
     # compute attention map, foreground object and background
     att, fg_real, bg_real = vqa_model.grad_cam(img[0].cpu(), orig_logits, activations)
-    att = att.permute(2,0,1).unsqueeze(0).to(device)
     mask = att.clone()
+    mask = mask.permute(2,0,1).unsqueeze(0).to(device)
     mask = normalize_mask(mask)
     
     # get x_co and the background image
@@ -184,7 +184,7 @@ def predict():
             counter_ans = json.loads(a2)["ans"][0]
             # get heatmap
             img_tensor = img_tensor[0].permute(1,2,0).detach().cpu().numpy()
-            heat_map = get_attention(np.array(img_tensor), att[0].permute(1,2,0).detach().cpu())
+            heat_map = get_attention(np.array(img_tensor), att.permute(1,2,0).detach().cpu())
             # convert counterfactual to base64
 
             counterfactual = trans_to_pil(counterfactual[0])
