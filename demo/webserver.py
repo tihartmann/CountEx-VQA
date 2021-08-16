@@ -140,7 +140,7 @@ def predict():
     _, counterfactual, a1, a2, _ = infer(visual_Tensor, question, dataset=train_dataset)
     print(counterfactual.shape)
     # convert counterfactual to base64
-    counterfactual = counterfactual[0].detach().cpu().numpy()
+    counterfactual = counterfactual[0].detach().numpy()
     counterfactual = base64.b64encode(counterfactual).decode('ascii')
     print(type(counterfactual))
     return render_template(
