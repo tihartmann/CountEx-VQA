@@ -21,14 +21,16 @@
     <p>
       <i>CountEx-VQA</i> is a tool that generates counterfactual images to make a Visual Question Answering (VQA) model's more interpretable. Given an image-question pair and a VQA model, 
       <i>CountEx-VQA</i> is trained to apply the minimal number of modifications to the image in order to change the VQA model's predicted answer to the question. 
+      This demo uses a <a href="https://github.com/Cadene/vqa.pytorch">pre-trained MUTAN model</a> 
+
 
     </p>
   </div>
   <div class="row">
     <h3>How it works</h3>
     <ol>
-      <li>Upload an image by clicking on the "Upload Image" button.</li>
-      <li>Enter a question about the image into the "Enter a question" field and hit the "Submit" button.</li>
+      <li>Upload an image and enter a question in the form below.</li>
+      <li>Hit the "Submit" button</li>
       <li><i>CountEx-VQA</i> uses a <a href="https://github.com/Cadene/vqa.pytorch">pretrained MUTAN VQA model</a> to predict an answer to your question. In addition to the prediction, it outputs
       a heatmap that indicates on which regions of the image MUTAN focused the most to make its decision.</li>
       <li><i>CountEx-VQA</i> returns a counterfactual image along with MUTAN's new prediction and the corresponding heatmap.</li>
