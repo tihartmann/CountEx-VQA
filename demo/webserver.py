@@ -135,11 +135,11 @@ def my_add(img, heat_map):
 
 def get_attention(image, normalized_heat_map):
     buff = BytesIO()
-    plt.figure(figsize=(256,256))
+    plt.figure(figsize=(2.56,2.56))
     plt.imshow(image)
     plt.imshow(255* normalized_heat_map, alpha=0.6, cmap="viridis")
     plt.axis("off")
-    plt.savefig(buff, format="JPEG", dpi=1)
+    plt.savefig(buff, format="JPEG", dpi=100)
     buff.seek(0)
     heat_img_base64 = base64.b64encode(buff.read()).decode('ascii')
     buff.close()
@@ -167,7 +167,6 @@ def predict():
     img_tensor, att, counterfactual, a1, a2, _ = infer(resize(visual_Tensor), question, dataset=train_dataset)
     orig_ans = json.loads(a1)["ans"][0]
     counter_ans = json.loads(a2)["ans"][0]
-    print(a2)
     # get heatmap
     img_tensor = img_tensor[0].permute(1,2,0).detach().cpu().numpy()
     heat_map = get_attention(np.array(img_tensor), att[0].permute(1,2,0).detach().cpu())
