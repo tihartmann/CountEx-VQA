@@ -32,7 +32,7 @@ normalize_img = transforms.Normalize((0.5,0.5,0.5),(0.5,0.5,0.5))
 normalize_mask = transforms.Normalize((0.5),(0.5))
 trans_to_pil = transforms.ToPILImage()
 trans_to_Tensor = transforms.ToTensor()
-device = 'cuda'
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 def norm_tensor(x):
     x = x[0]
@@ -141,7 +141,7 @@ def predict():
 
     # convert counterfactual to base64
     counterfactual = counterfactual[0].detach().cpu().numpy()
-    counterfactual = base64.b64encode(counterfactual)
+    counterfactual = base64.b64encode(counterfactual).decode('ascii')
     print(a1)
     return render_template(
         'index.html', 
