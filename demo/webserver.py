@@ -137,7 +137,7 @@ def get_attention(image, normalized_heat_map):
     buff = BytesIO()
     plt.figure(figsize=(2.56,2.56))
     plt.imshow(image)
-    plt.imshow(255* normalized_heat_map, alpha=0.6, cmap="viridis")
+    plt.imshow(-255* normalized_heat_map, alpha=0.6, cmap="viridis")
     plt.axis("off")
     plt.tight_layout()
     plt.savefig(buff, format="JPEG", dpi=100, bbox_inches="tight", pad_inches=0)
