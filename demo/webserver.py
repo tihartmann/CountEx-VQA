@@ -14,7 +14,7 @@ from io import BytesIO
 import base64
 from skimage import transform
 
-from VQA.vqa_pytorch.vqa_inference import MutanAttInferencedemo
+from VQA.vqa_pytorch.vqa_inference import MutanAttInference2
 from tempfile import NamedTemporaryFile
 from shutil import copyfileobj
 
@@ -44,7 +44,7 @@ gen.load_state_dict(checkpoint["state_dict"])
 gen.eval()
 
 # load VQA model
-vqa_model = MutanAttInferencedemo(dir_logs='../VQA/vqa_pytorch/logs/vqa/mutan_att_trainval', config='../VQA/vqa_pytorch/options/vqa/mutan_att_trainval.yaml')
+vqa_model = MutanAttInference2(dir_logs='../VQA/vqa_pytorch/logs/vqa/mutan_att_trainval', config='../VQA/vqa_pytorch/options/vqa/mutan_att_trainval.yaml')
 train_dataset = VQADataset2(root_dir="../", mode="train")
 
 classes = get_vqa_classes(train_dataset, vqa_model)
@@ -121,23 +121,11 @@ def infer(img, question, dataset):
     #pred_logits_new = norm_tensor(pred_logits_new)
     return img, att, generated * 0.5 + 0.5, a1, a2, question
 
-def my_add(img, heat_map):
-    height = img.shape[0]
-    width = img.shape[1]
-    
-    # resize heat map
-    heat_map_resized = transform.resize(heat_map, (height, width,1))
-    # normalize
-    max_value = np.max(heat_map_resized)
-    min_value = np.min(heat_map_resized)
-    normalized_heat_map = (heat_map_resized - min_value) / (max_value - min_value)
-    return normalized_heat_map
-
 def get_attention(image, normalized_heat_map):
     buff = BytesIO()
     plt.figure(figsize=(2.56,2.56))
     plt.imshow(image)
-    plt.imshow(255* normalized_heat_map, alpha=0.6, cmap="viridis")
+    plt.imshow(255* normalized_heat_map, alpha=0.6, cmap="turbo")
     plt.axis("off")
     plt.tight_layout()
     plt.savefig(buff, format="JPEG", dpi=100, bbox_inches="tight", pad_inches=0)
