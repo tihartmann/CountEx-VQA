@@ -158,6 +158,7 @@ def predict():
     
     if request.method == 'POST':
         if 'inputImage' not in request.files:
+            print("image there!")
             flash('Please upload an image!')
             return render_template('index.html')
         elif 'inputQuestion' not in request.form:
