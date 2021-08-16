@@ -183,7 +183,7 @@ def predict():
         question=question, 
         original_image=f'<img src="data:image/jpg;base64,{img}" class="img-fluid" width="256" height="256"/>', 
         orig_ans=orig_ans,
-        heat_map=f'<img src="data:image/jpg;base64,{heat_map}" class="img-fluid"/>',
+        heat_map=f'<img src="data:image/jpg;base64,{heat_map}" class="img-fluid" width="256" height="256"/>',
         counterfactual=f'<img src="data:image/jpg;base64,{counterfactual}" class="img-fluid" width="256" height="256"/>',
         counter_ans=counter_ans,
     )
