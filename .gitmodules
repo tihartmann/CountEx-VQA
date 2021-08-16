@@ -7,3 +7,6 @@
 [submodule "VQA/vqa_pytorch"]
 	path = VQA/vqa_pytorch
 	url = https://github.com/Cadene/vqa.pytorch.git
+[submodule "demo/heatmap"]
+	path = demo/heatmap
+	url = https://github.com/durandtibo/heatmap.git

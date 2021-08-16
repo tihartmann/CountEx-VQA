@@ -138,7 +138,6 @@ def predict():
     
     # make inference
     _, counterfactual, a1, a2, _ = infer(visual_Tensor, question, dataset=train_dataset)
-    print(counterfactual.shape)
     # convert counterfactual to base64
 
     counterfactual = trans_to_pil(counterfactual[0])
@@ -146,7 +145,6 @@ def predict():
     counterfactual.save(buff, format="JPEG")
     counterfactual = base64.b64encode(buff.getvalue()).decode('ascii')
     buff.close()
-    print(type(counterfactual))
     return render_template(
         'index.html', 
         question=question, 
