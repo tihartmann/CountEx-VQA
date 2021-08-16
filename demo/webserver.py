@@ -161,11 +161,11 @@ def predict():
     question = request.form.get('inputQuestion')
     
     # make inference
-    _, att, counterfactual, a1, a2, _ = infer(visual_Tensor, question, dataset=train_dataset)
+    img_tensor, att, counterfactual, a1, a2, _ = infer(resize(visual_Tensor), question, dataset=train_dataset)
     orig_ans = json.loads(a1)["ans"][0]
     counter_ans = json.loads(a2)["ans"][0]
     # get heatmap
-    img_tensor = visual_Tensor.detach().cpu().numpy()
+    img_tensor = img_tensor[0].detach().cpu().numpy()
     normalized_heat_map = my_add(img_tensor, att.detach().cpu().numpy())
     heat_map = get_attention(img_tensor, normalized_heat_map)
     # convert counterfactual to base64
