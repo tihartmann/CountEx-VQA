@@ -157,6 +157,7 @@ def serve_pil_image(pil_image):
 def predict():
     
     if request.method == 'POST':
+        print(request.files)
         if 'inputImage' not in request.files:
             print("image there!")
             flash('Please upload an image!')
