@@ -6,6 +6,7 @@ from model.generator import Generator
 from torch.utils.data import DataLoader
 from torchvision import transforms, datasets
 import torch.nn as nn
+import numpy as np
 import re
 from PIL import Image
 from io import BytesIO
@@ -74,14 +75,10 @@ def infer(img, question, dataset):
     att = att.permute(2,0,1).unsqueeze(0).to(device)
     mask = att.clone()
     mask = normalize_mask(mask)
-    #mask[att > 0.15] = 0.9
-    #mask[att <= 0.2] = 0.2
     
     # get x_co and the background image
     fg_real = normalize_img(fg_real)
 
-    #plt.imshow((fg_real[0].cpu() * 0.5 +0.5).permute(1,2,0))
-    #plt.savefig("testfg.jpg")
 
     bg_real = normalize_img(bg_real)
    
@@ -89,21 +86,17 @@ def infer(img, question, dataset):
     with torch.cuda.amp.autocast():                    
         norm_img = normalize_img(img)
         y_fake = gen(torch.cat([norm_img, mask], 1), q1, orig_logits_new)
-        #y_fake = gen(torch.cat([norm_img, mask],1), q1, orig_logits_new) #gen(torch.cat([((1.-mask) * img), mask], 1), orig_logits_new)
-        #generated = y_fake.clone()
         generated = normalize_img((att * (y_fake * 0.5 + 0.5)) + (1.-att) * img)
-        #plt.imshow((generated[0].detach().cpu() * 0.5 + 0.5).permute(1,2,0))
-        #plt.savefig("gen.jpg")
     
     gen_im = generated[0].clone()
     gen_im = gen_im * 0.5 + 0.5
     gen_im = trans_to_pil(gen_im)
 
     a2, pred_logits, q2, activations2 = vqa_model.infer(gen_im, question)
-    pred_logits_new = pred_logits.clone()
-    pred_logits_new = torch.Tensor(pred_logits.cpu().detach().numpy()[:,vqa_model.classes]).to(device)
+    #pred_logits_new = pred_logits.clone()
+    #pred_logits_new = torch.Tensor(pred_logits.cpu().detach().numpy()[:,vqa_model.classes]).to(device)
     #normalize logits to be between [-1,1]
-    pred_logits_new = norm_tensor(pred_logits_new)
+    #pred_logits_new = norm_tensor(pred_logits_new)
     return img, generated * 0.5 + 0.5, a1, a2, question
 
 app = Flask(__name__)
@@ -145,8 +138,17 @@ def predict():
     
     # make inference
     _, counterfactual, a1, a2, _ = infer(visual_Tensor, question, dataset=train_dataset)
+
+    # convert counterfactual to base64
+    counterfactual = counterfactual[0].cpu().numpy()
+    counterfactual = base64.b64encode(counterfactual)
     print(a1)
-    return render_template('index.html', question=question, original_image=f'<img src="data:image/jpg;base64,{img}" class="img-fluid" width="256" height="256"/>')
+    return render_template(
+        'index.html', 
+        question=question, 
+        original_image=f'<img src="data:image/jpg;base64,{img}" class="img-fluid" width="256" height="256"/>', 
+        counterfactual=f'<img src="data:image/jpg;base64,{counterfactual}" class="img-fluid" width="256" height="256"/>'    
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
