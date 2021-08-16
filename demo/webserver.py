@@ -141,7 +141,7 @@ def predict():
     print(counterfactual.shape)
     # convert counterfactual to base64
 
-    counterfactual = trans_to_pil(counterfactual[0]).detach().cpu().numpy()
+    counterfactual = counterfactual[0].permute(1,2,0).cpu().numpy()
     counterfactual = base64.b64encode(counterfactual).decode('ascii')
     print(type(counterfactual))
     return render_template(
