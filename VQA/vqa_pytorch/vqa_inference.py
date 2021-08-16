@@ -319,7 +319,7 @@ class MutanAttInferencedemo():
         heat = torch.mean(activations, dim=1).squeeze()
         heat = ndimage.filters.gaussian_filter(heat.cpu(), sigma=2)
 
-        heat = self.interpolate(np.array(img), 1 * heat)
+        heat = self.interpolate(np.array(img), -1 * heat)
         heat[heat > 0.95] = 0.95
         heat[heat < 0.2] = 0.2
         heat = torch.Tensor(heat)
