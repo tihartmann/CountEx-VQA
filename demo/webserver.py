@@ -142,7 +142,7 @@ def predict():
     # convert counterfactual to base64
     counterfactual = counterfactual[0].detach().cpu().numpy()
     counterfactual = base64.b64encode(counterfactual).decode('ascii')
-    print(a1)
+    print(type(counterfactual))
     return render_template(
         'index.html', 
         question=question, 
