@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Butterfly+Kids|Roboto" rel="stylesheet"> 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
@@ -33,6 +34,20 @@
       <li><i>CountEx-VQA</i> returns a counterfactual image along with MUTAN's new prediction and the corresponding heatmap.</li>
     </ol>
   </div>
+</div>
+
+<div class="container">
+  <form action="/predict" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="inputImage">Upload an Image</label>
+      <input type="file" class="form-control" id="inputImage" name="inputImage">
+    </div>
+    <div class="form-group">
+      <label for="inputQuestion">Enter Question</label>
+      <input type="text" class="form-control" id="inputQuestion" placeholder="Type a question..." name="inputQuestion">
+    </div>
+    <button type="submit" class="btn btn-primary" id="submitInput">Submit</button>
+  </form>
 </div>
 </body>
 </html>

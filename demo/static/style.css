@@ -1,11 +1,7 @@
-.navbar {
-	background-color: #e3f2fd;
-	height: 90px;
-}
-.navbar-brand {
-	font-size: 28px;
+body {
+	font-family: 'Roboto', sans-serif;
 }
 
-#tagline {
-	font-size: 0.80em;
+.container {
+	padding: 2em;
 }
