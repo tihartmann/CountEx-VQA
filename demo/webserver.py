@@ -147,7 +147,7 @@ def predict():
     counterfactual = base64.b64encode(buff.getvalue()).decode('ascii')
     buff.close()
     return render_template(
-        'index.html', 
+        'predict.html', 
         question=question, 
         original_image=f'<img src="data:image/jpg;base64,{img}" class="img-fluid" width="256" height="256"/>', 
         orig_ans=orig_ans,
