@@ -135,10 +135,11 @@ def my_add(img, heat_map):
 
 def get_attention(image, normalized_heat_map):
     buff = BytesIO()
+    plt.set_size_inches(256,256)
     plt.imshow(image)
     plt.imshow(255* normalized_heat_map, alpha=0.6, cmap="viridis")
     plt.axis("off")
-    plt.savefig(buff, format="JPEG")
+    plt.savefig(buff, format="JPEG", dpi=1)
     buff.seek(0)
     heat_img_base64 = base64.b64encode(buff.read()).decode('ascii')
     buff.close()
