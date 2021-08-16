@@ -140,6 +140,7 @@ def get_attention(image, normalized_heat_map):
     plt.savefig(buff, format="JPEG")
     buff.seek(0)
     heat_img_base64 = base64.b64encode(buff.read()).decode('ascii')
+    buff.close()
     return heat_img_base64
 
 @app.route('/')
@@ -165,7 +166,7 @@ def predict():
     orig_ans = json.loads(a1)["ans"][0]
     counter_ans = json.loads(a2)["ans"][0]
     # get heatmap
-    img_tensor = img_tensor[0].detach().cpu().numpy()
+    img_tensor = img_tensor[0].permute(1,2,0).detach().cpu().numpy()
     heat_map = get_attention(np.array(img_tensor), att.detach().cpu())
     # convert counterfactual to base64
 
