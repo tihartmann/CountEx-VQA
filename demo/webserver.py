@@ -155,38 +155,52 @@ def serve_pil_image(pil_image):
 
 @app.route('/predict', methods=['GET','POST'])
 def predict():
+    
+    if request.method == 'POST':
+        if 'inputImage' not in request.files:
+            flash('Please upload an image!')
+            return render_template('index.html')
+        elif 'inputQuestion' not in request.form:
+            flash('Please enter a question!')
+            return render_template('index.html')
         
-    # get form data
-    img_file = request.files['inputImage'].filename
-    img = request.files['inputImage'].read()
-    img = base64.b64encode(img).decode('ascii')
-    visual_Tensor = trans_to_Tensor(Image.open(BytesIO(base64.b64decode(img))))
-    
-    question = request.form.get('inputQuestion')
-    
-    # make inference
-    img_tensor, att, counterfactual, a1, a2, _ = infer(resize(visual_Tensor), question, dataset=train_dataset)
-    orig_ans = json.loads(a1)["ans"][0]
-    counter_ans = json.loads(a2)["ans"][0]
-    # get heatmap
-    img_tensor = img_tensor[0].permute(1,2,0).detach().cpu().numpy()
-    heat_map = get_attention(np.array(img_tensor), att[0].permute(1,2,0).detach().cpu())
-    # convert counterfactual to base64
+        # get form data
+        img = request.files['inputImage']
+        if img.filename == '':
+            flash('Please upload a valid image!')
+            return render_template('index.html')
+        if img and allowed_file(img.filename):
+            img = img.read()
+            img = base64.b64encode(img).decode('ascii')
+            visual_Tensor = trans_to_Tensor(Image.open(BytesIO(base64.b64decode(img))))
+            
+            question = request.form.get('inputQuestion')
+            
+            # make inference
+            img_tensor, att, counterfactual, a1, a2, _ = infer(resize(visual_Tensor), question, dataset=train_dataset)
+            orig_ans = json.loads(a1)["ans"][0]
+            counter_ans = json.loads(a2)["ans"][0]
+            # get heatmap
+            img_tensor = img_tensor[0].permute(1,2,0).detach().cpu().numpy()
+            heat_map = get_attention(np.array(img_tensor), att[0].permute(1,2,0).detach().cpu())
+            # convert counterfactual to base64
 
-    counterfactual = trans_to_pil(counterfactual[0])
-    buff = BytesIO()
-    counterfactual.save(buff, format="JPEG")
-    counterfactual = base64.b64encode(buff.getvalue()).decode('ascii')
-    buff.close()
-    return render_template(
-        'predict.html', 
-        question=question, 
-        original_image=f'<img src="data:image/jpg;base64,{img}" class="img-fluid" width="256" height="256"/>', 
-        orig_ans=orig_ans,
-        heat_map=f'<img src="data:image/jpg;base64,{heat_map}" class="img-fluid" width="256" height="256"/>',
-        counterfactual=f'<img src="data:image/jpg;base64,{counterfactual}" class="img-fluid" width="256" height="256"/>',
-        counter_ans=counter_ans,
-    )
+            counterfactual = trans_to_pil(counterfactual[0])
+            buff = BytesIO()
+            counterfactual.save(buff, format="JPEG")
+            counterfactual = base64.b64encode(buff.getvalue()).decode('ascii')
+            buff.close()
+            return render_template(
+                'predict.html', 
+                question=question, 
+                original_image=f'<img src="data:image/jpg;base64,{img}" class="img-fluid" width="256" height="256"/>', 
+                orig_ans=orig_ans,
+                heat_map=f'<img src="data:image/jpg;base64,{heat_map}" class="img-fluid" width="256" height="256"/>',
+                counterfactual=f'<img src="data:image/jpg;base64,{counterfactual}" class="img-fluid" width="256" height="256"/>',
+                counter_ans=counter_ans,
+            )
+    flash('Something went wrong!')
+    return render_template('index.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
