@@ -154,7 +154,7 @@ def predict():
                 print("image not there!")
                 flash('Please upload an image!')
                 return render_template('index.html')
-            elif 'inputQuestion' not in request.form:
+            if 'inputQuestion' not in request.form:
                 flash('Please enter a question!')
                 return render_template('index.html')
             
