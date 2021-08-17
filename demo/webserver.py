@@ -33,6 +33,8 @@ trans_to_pil = transforms.ToPILImage()
 trans_to_Tensor = transforms.ToTensor()
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
+secret_key = secrets.token_hex(16)
+
 
 app = Flask(__name__)
 app.secret_key = secret_key
@@ -200,5 +202,4 @@ def predict():
         return render_template('index.html')
 
 if __name__ == "__main__":
-    secret_key = secrets.token_hex(16)
     app.run()
