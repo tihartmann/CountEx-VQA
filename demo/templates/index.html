@@ -39,6 +39,9 @@
 </div>
 
 <div class="container">
+  {% for mesg in get_flashed_messages() %}
+      <h1>{{ mesg }}</h1>
+  {% endfor %}
   <form action="/predict" method="POST" enctype="multipart/form-data">
     <div class="form-group">
       <label for="inputImage">Upload an Image</label>
