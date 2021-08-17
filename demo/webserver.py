@@ -12,7 +12,7 @@ import json
 from PIL import Image
 from io import BytesIO
 import base64
-from skimage import transform
+import secrets
 
 from VQA.vqa_pytorch.vqa_inference import MutanAttInference2
 from tempfile import NamedTemporaryFile
@@ -195,4 +195,6 @@ def predict():
         return render_template('index.html')
 
 if __name__ == "__main__":
+    secret_key = secrets.token_hex(16)
+    app.secret_key = secret_key
     app.run()
