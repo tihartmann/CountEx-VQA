@@ -159,6 +159,9 @@ def predict():
             if img.filename == '':
                 flash('Please upload a valid image!')
                 return render_template('index.html')
+            if not allowed_file(img.filename):
+                flash('Not a valid image file!')
+                return render_template('index.html')
             if img and allowed_file(img.filename):
                 img = img.read()
                 img = base64.b64encode(img).decode('ascii')
