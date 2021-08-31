@@ -56,3 +56,4 @@ flask run
 ## Acknowledgements
 This project uses a pre-trained MUTAN VQA-Model as described by Ben-younes et al. (2017) in their paper [*MUTAN: Multimodal Tucker Fusion for Visual Question Answering*](https://arxiv.org/abs/1705.06676).
 The code and pre-trained models can be found in [this repository](https://github.com/Cadene/vqa.pytorch).
+For spectral normalization, I used [this code](https://github.com/christiancosgrove/pytorch-spectral-normalization-gan/blob/12dcf945a6359301d63d1e0da3708cd0f0590b19/spectral_normalization.py).
