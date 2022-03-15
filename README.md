@@ -59,7 +59,7 @@ The code and pre-trained models can be found in [this repository](https://github
 For spectral normalization, I used [this code](https://github.com/christiancosgrove/pytorch-spectral-normalization-gan/blob/12dcf945a6359301d63d1e0da3708cd0f0590b19/spectral_normalization.py).
 
 ## Cite us
-If you used my code, please cite our papers: 
+If you used our code, please cite our paper: 
 
 ```
 @Article{s22062245,
@@ -74,6 +74,4 @@ URL = {https://www.mdpi.com/1424-8220/22/6/2245},
 ISSN = {1424-8220},
 DOI = {10.3390/s22062245}
 }
-
-
 ```
