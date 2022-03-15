@@ -1,4 +1,4 @@
-# CountEx-VQA - Counterfactual Explanations for Visual Question Answering
+# CountEx-VQA - Counterfactual Explanations for Visual Question Answering 
 This repository contains the code for my Master's thesis "Generating Counterfactual Images for VQA by Editing Question Critical Objects" at WeST, University of Koblenz-Landau.
 The thesis was supervised by Prof. Dr. Matthias Thimm and Dr. Zeyd Boukhers. This repo was made by [Timo Hartmann](https://www.researchgate.net/profile/Timo-Hartmann-3). 
 
@@ -57,3 +57,23 @@ flask run
 This project uses a pre-trained MUTAN VQA-Model as described by Ben-younes et al. (2017) in their paper [*MUTAN: Multimodal Tucker Fusion for Visual Question Answering*](https://arxiv.org/abs/1705.06676).
 The code and pre-trained models can be found in [this repository](https://github.com/Cadene/vqa.pytorch).
 For spectral normalization, I used [this code](https://github.com/christiancosgrove/pytorch-spectral-normalization-gan/blob/12dcf945a6359301d63d1e0da3708cd0f0590b19/spectral_normalization.py).
+
+## Cite us
+If you used my code, please cite our papers: 
+
+```
+@Article{s22062245,
+AUTHOR = {Boukhers, Zeyd and Hartmann, Timo and Jürjens, Jan},
+TITLE = {COIN: Counterfactual Image Generation for Visual Question Answering Interpretation},
+JOURNAL = {Sensors},
+VOLUME = {22},
+YEAR = {2022},
+NUMBER = {6},
+ARTICLE-NUMBER = {2245},
+URL = {https://www.mdpi.com/1424-8220/22/6/2245},
+ISSN = {1424-8220},
+DOI = {10.3390/s22062245}
+}
+
+
+```
